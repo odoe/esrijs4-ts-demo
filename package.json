@@ -1,0 +1,23 @@
+{
+  "name": "widgets",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "grunt watch",
+    "postinstall": "typings install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dojo-typings": "^1.11.5",
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-ts": "^6.0.0-beta.3",
+    "grunt-tsconfig": "^0.2.2",
+    "grunt-tslint": "^4.0.0",
+    "tslint": "^4.2.0",
+    "typescript": "^2.1.4"
+  }
+}

@@ -1,0 +1,8 @@
+node_modules/*
+.vscode/*
+app/*.js*
+app/**/*.js*
+app/**/**/*.js*
+typings/*
+.baseDir*
+.tsdrc
