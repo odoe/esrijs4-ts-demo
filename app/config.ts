@@ -9,10 +9,7 @@ export const mapOptions: any = {
 export const mapViewOptions: any = {
   container: "viewDiv",
   center: [-118.244, 34.052],
-  zoom: 10
-  /*ui: {
-    components: ["zoom", "attribution"]
-  }*/
+  zoom: 12
 };
 
 export const layerInfos = [

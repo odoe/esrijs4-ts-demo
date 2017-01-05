@@ -11,8 +11,10 @@ import store from "../stores/app";
 import Summary from "./summary";
 import SummaryViewModel from "./viewmodels/summaryviewmodel";
 
+const { whenOnce } = watchUtils;
+
 export function widgetInit() {
-  watchUtils.whenOnce(store, "view")
+  whenOnce(store, "view")
   .then(({ value: view }) => {
     [
       {

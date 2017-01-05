@@ -4,37 +4,24 @@
 import Accessor = require("esri/core/Accessor");
 import watchUtils = require("esri/core/watchUtils");
 
+import Query = require("esri/tasks/support/Query");
+
 import { subclass, declared, property } from "esri/core/accessorSupport/decorators";
 
 import store from "../../stores/app";
 
-const { init } = watchUtils;
+const { init, whenOnce, whenFalse } = watchUtils;
 
-const data = {
-  labels: [
-    "Carcinogen", // CARCINOGEN == "Yes"
-    "PBT",        // CLASS == "PBT"
-    "Non-PBT",    // CLASS == "Non-PBT"
-    "Metal"       // METAL == "Yes"
-  ],
-  datasets: [
-    {
-      data: [0, 0, 0, 0],
-      backgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "CC65FE"
-      ],
-      hoverBackgroundColor: [
-          "#FF6384",
-          "#36A2EB",
-          "#FFCE56",
-          "CC65FE"
-      ]
-    }
-  ]
+const stats = {
+  "Carcinogen": 0, // CARCINOGEN == "Yes"
+  "PBT": 0,        // CLASS == "PBT"
+  "Non-PBT": 0,    // CLASS == "Non-PBT"
+  "Metal": 0       // METAL == "Yes"
 };
+
+function errorHandler(error: Error) {
+  console.log("LayerView Query Error", error);
+}
 
 @subclass("app.widgets.viewmodels.summaryviewmodel")
 class SummaryViewModel extends declared(Accessor) {
@@ -43,46 +30,55 @@ class SummaryViewModel extends declared(Accessor) {
   count: number = 0;
 
   @property()
-  barchartData: BarChartOptions = data;
+  stats: any = stats;
 
   constructor() {
     super();
-    watchUtils.whenOnce(store, "view").then(_ => {
+    whenOnce(store, "view").then(_ => {
       return store.webmap.findLayerById("tri");
     })
     .then(layer => {
       return store.view.whenLayerView(layer);
     })
-    .then(layerView => {
-      init(layerView, "updating", (val: any) => {
-        if (!val) {  // wait for the layer view to finish updating
-          layerView.queryFeatures().then(this.parseResults);
-        }
-      });
-    })
-    .otherwise(error => console.log("LayerView Query Error", error));
+    .then(this.watchLayerView.bind(this))
+    .otherwise(errorHandler);
+  }
+
+  private watchLayerView(layerView: __esri.FeatureLayerView) {
+    const queryFeatures = this.queryLayerView(layerView);
+    init(store, "view.stationary", _ => {
+      if (layerView.updating) {
+        whenFalse(layerView, "updating", queryFeatures.bind(this));
+      }
+      else {
+        queryFeatures();
+      }
+    });
+  }
+
+  private queryLayerView(layerView: __esri.FeatureLayerView) {
+    return () => layerView.queryFeatures(new Query({ geometry: store.view.extent })).then(this.parseResults.bind(this));
   }
 
   private parseResults(results: __esri.Graphic[]) {
-    const d = data.datasets[0];
-    d.data = [0, 0, 0, 0];
+    const _stats = (<any> Object).assign({}, stats);
     results.forEach(({ attributes: attr }) => {
       if (attr.CARCINOGEN === "Yes") {
-        d.data[0]++;
+        _stats["Carcinogen"]++;
       }
       if (attr.CLASS === "PBT") {
-        d.data[1]++;
+        _stats["PBT"]++;
       }
       else if (attr.CLASS === "Non-PBT") {
-        d.data[2]++;
+        _stats["Non-PBT"]++;
       }
       if (attr.METAL === "Yes") {
-        d.data[3]++;
+        _stats["Metal"]++;
       }
     });
     this.set({
       count: results.length,
-      barchartData: data
+      stats: _stats
     });
   }
 
