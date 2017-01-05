@@ -10,3 +10,8 @@ body ,
 html, body {
   font-family: sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
+
+
+.summary-widget {
+  padding: 1em;
+}

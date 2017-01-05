@@ -19,5 +19,8 @@
     "grunt-tslint": "^4.0.0",
     "tslint": "^4.2.0",
     "typescript": "^2.1.4"
+  },
+  "dependencies": {
+    "@types/chartjs": "0.0.29"
   }
 }

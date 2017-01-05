@@ -1,22 +1,23 @@
-import * as EsriMap from "esri/Map";
-import * as MapView from "esri/views/MapView";
+import EsriMap = require("esri/Map");
+import MapView = require("esri/views/MapView");
+import FeatureLayer = require("esri/layers/FeatureLayer");
 
-const map = new EsriMap({
-  basemap: "streets"
-});
+import { widgetInit } from "./widgets/core";
+import store from "./stores/app";
 
-const view = new MapView({
-  container: 'viewDiv',
-  map,
-  center: [-100.33, 25.69],
-  zoom: 10
-  /*ui: {
-    components: [
-      "zoom",
-      "attribution",
-      "compass"
-    ]
-  }*/
-});
+import {
+  mapOptions,
+  mapViewOptions,
+  layerInfos
+} from './config';
 
-//view.ui.components = ["zoom", "attribution", "compass"];
+widgetInit();
+
+const featureInfos = layerInfos.filter(x => x.layerType === "feature");
+mapOptions.layers = featureInfos.map(x => new FeatureLayer(x));
+
+const webmap = new EsriMap(mapOptions);
+mapViewOptions.map = webmap;
+const view = new MapView(mapViewOptions);
+
+store.set({ webmap, view });

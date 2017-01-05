@@ -6,3 +6,4 @@ app/**/**/*.js*
 typings/*
 .baseDir*
 .tsdrc
+.tscache

@@ -6,6 +6,7 @@
     "removeComments": false,
     "sourceMap": true,
     "jsx": "react",
+    "reactNamespace": "jsxFactory",
     "target": "es5",
     "moduleResolution": "node",
     "isolatedModules": false,
@@ -16,8 +17,11 @@
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "files": [
-    "./app/main.ts",
+  "include": [
+    "./app/**/*",
     "./typings.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
