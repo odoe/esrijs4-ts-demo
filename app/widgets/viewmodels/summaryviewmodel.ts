@@ -12,7 +12,14 @@ import store from "../../stores/app";
 
 const { init, whenOnce, whenFalse } = watchUtils;
 
-const stats = {
+export type Stats = {
+  "Carcinogen": number,
+  "PBT": number,
+  "Non-PBT": number,
+  "Metal": number
+};
+
+const stats: Stats = {
   "Carcinogen": 0, // CARCINOGEN == "Yes"
   "PBT": 0,        // CLASS == "PBT"
   "Non-PBT": 0,    // CLASS == "Non-PBT"
@@ -30,7 +37,7 @@ class SummaryViewModel extends declared(Accessor) {
   count: number = 0;
 
   @property()
-  stats: any = stats;
+  stats: Stats = stats;
 
   constructor() {
     super();

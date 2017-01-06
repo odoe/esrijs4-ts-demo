@@ -3,7 +3,7 @@
 
 import Widget = require("esri/widgets/Widget");
 
-import ViewModel from "./viewmodels/summaryviewmodel";
+import SummaryViewModel, { Stats } from "./viewmodels/summaryviewmodel";
 
 import { aliasOf, subclass, declared, property } from "esri/core/accessorSupport/decorators";
 import { renderable, join, jsxFactory } from "esri/widgets/support/widget";
@@ -37,13 +37,12 @@ class Summary extends declared(Widget) {
 
   @aliasOf("viewModel.stats")
   @renderable()
-  stats: any;
+  stats: Stats;
 
   @property({
-    type: ViewModel
+    type: SummaryViewModel
   })
-  @renderable(["viewModel.count", "viewModel.stats"])
-  viewModel: ViewModel = new ViewModel();
+  viewModel: SummaryViewModel = new SummaryViewModel();
 
   render() {
     const max = roundToInt(allValues(this.stats), 10);
