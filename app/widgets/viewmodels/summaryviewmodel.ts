@@ -4,6 +4,9 @@
 import Accessor = require("esri/core/Accessor");
 import watchUtils = require("esri/core/watchUtils");
 
+import FeatureLayerView = require("esri/views/layers/FeatureLayerView");
+import Graphic = require("esri/Graphic");
+
 import Query = require("esri/tasks/support/Query");
 
 import { subclass, declared, property } from "esri/core/accessorSupport/decorators";
@@ -51,7 +54,7 @@ class SummaryViewModel extends declared(Accessor) {
     .otherwise(errorHandler);
   }
 
-  private watchLayerView(layerView: __esri.FeatureLayerView) {
+  private watchLayerView(layerView: FeatureLayerView) {
     const queryFeatures = this.queryLayerView(layerView);
     init(store, "view.stationary", _ => {
       if (layerView.updating) {
@@ -63,11 +66,11 @@ class SummaryViewModel extends declared(Accessor) {
     });
   }
 
-  private queryLayerView(layerView: __esri.FeatureLayerView) {
+  private queryLayerView(layerView: FeatureLayerView) {
     return () => layerView.queryFeatures(new Query({ geometry: store.view.extent })).then(this.parseResults.bind(this));
   }
 
-  private parseResults(results: __esri.Graphic[]) {
+  private parseResults(results: Graphic[]) {
     const _stats = (<any> Object).assign({}, stats);
     results.forEach(({ attributes: attr }) => {
       if (attr.CARCINOGEN === "Yes") {

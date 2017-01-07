@@ -20,12 +20,25 @@ const CSS = {
   keysection: "keysection"
 };
 
+type Style = {
+  target: Stats,
+  multi: number
+};
+
 function allValues(x: any) {
   return Math.max(...(Object.keys(x).map((k) => x[k])));
 }
 
 function roundToInt(num: number, target: number) {
   return Math.round(num / target) * 10;
+}
+
+function inlineStyle({ target, multi }: Style) {
+  return Object.keys(target).map(k => {
+    return {
+      height: `${target[k] * multi}px`
+    };
+  });
 }
 
 @subclass("app.widgets.summary")
@@ -48,20 +61,17 @@ class Summary extends declared(Widget) {
     const max = roundToInt(allValues(this.stats), 10);
     const multi = 1;
     const chartHeight = { height: `${(max * multi)}px` };
-    const c = { height: `${this.stats["Carcinogen"] * multi}px`};
-    const p = { height: `${this.stats["PBT"] * multi}px`};
-    const n = { height: `${this.stats["Non-PBT"] * multi}px`};
-    const m = { height: `${this.stats["Metal"] * multi}px`};
+    const styles = inlineStyle({ target: this.stats, multi });
     return (
       <div class={CSS.base}>
         <div class={CSS.container}>
           <label>Facilities Summary ({this.count})</label>
           <hr />
           <div id="simpleChart" styles={chartHeight}>
-            <div id="carcinogen" class={join(CSS.column, CSS.red)} styles={c}></div>
-            <div id="pbt" class={join(CSS.column, CSS.blue)} styles={p}></div>
-            <div id="non-pbt" class={join(CSS.column, CSS.yellow)} styles={n}></div>
-            <div id="metal" class={join(CSS.column, CSS.purple)} styles={m}></div>
+            <div id="carcinogen" class={join(CSS.column, CSS.red)} styles={styles[0]}></div>
+            <div id="pbt" class={join(CSS.column, CSS.blue)} styles={styles[1]}></div>
+            <div id="non-pbt" class={join(CSS.column, CSS.yellow)} styles={styles[2]}></div>
+            <div id="metal" class={join(CSS.column, CSS.purple)} styles={styles[3]}></div>
           </div>
         </div>
         <section class={CSS.keysection}>
