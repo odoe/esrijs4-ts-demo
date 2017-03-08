@@ -3,7 +3,7 @@ export const webmap = {
 };
 
 export const mapOptions: any = {
-  basemap: "streets-navigation-vector"
+  basemap: "dark-gray-vector"
 };
 
 export const mapViewOptions: any = {
