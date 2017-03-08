@@ -6,14 +6,18 @@
     "dev": "tsc -w",
     "lint": "tslint './app/*.ts'"
   },
-  "keywords": ["esri", "arcgis", "typescript"],
+  "keywords": [
+    "esri",
+    "arcgis",
+    "typescript"
+  ],
   "author": "Rene Rubalcava <rrubalcava@esri.com",
   "license": "MIT",
   "devDependencies": {
     "tslint": "^4.2.0"
   },
   "dependencies": {
-    "typescript": "^2.1.4",
-    "@types/arcgis-js-api": "^4.2.0"
+    "@types/arcgis-js-api": "^4.2.0",
+    "typescript": "^2.2.1"
   }
 }
