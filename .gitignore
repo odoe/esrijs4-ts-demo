@@ -7,3 +7,4 @@ typings/*
 .baseDir*
 .tsdrc
 .tscache
+npm-debug.log

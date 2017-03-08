@@ -17,9 +17,9 @@
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true
   },
+  "types": [ "arcgis-js-api" ],
   "include": [
-    "./app/**/*",
-    "./typings.d.ts"
+    "./app/**/*"
   ],
   "exclude": [
     "node_modules"

@@ -45,7 +45,10 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "quotemark": false,
+    "quotemark": [
+      true,
+      "double"
+    ],
     "radix": true,
     "semicolon": [
       true,

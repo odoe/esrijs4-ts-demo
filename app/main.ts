@@ -9,7 +9,7 @@ import {
   mapOptions,
   mapViewOptions,
   layerInfos
-} from './config';
+} from "./config";
 
 widgetInit();
 

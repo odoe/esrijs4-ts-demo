@@ -2,6 +2,7 @@
 
 ## Usage
 
-Clone the repo and run `npm install`
+Clone the repo and run `npm install` or `yarn`.
 
-You can use `grunt watch` while developing to compile JS from TS as you work.
+* `npm run dev` - compile TypeScript and watch for changes.
+* `npm run lint` - lint your TypeScript files

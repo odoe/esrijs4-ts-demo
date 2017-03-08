@@ -2,22 +2,18 @@
   "name": "widgets",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "run": "grunt watch",
-    "postinstall": "typings install"
+    "dev": "tsc -w",
+    "lint": "tslint './app/*.ts'"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["esri", "arcgis", "typescript"],
+  "author": "Rene Rubalcava <rrubalcava@esri.com",
+  "license": "MIT",
   "devDependencies": {
-    "dojo-typings": "^1.11.5",
-    "grunt": "^1.0.1",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-ts": "^6.0.0-beta.3",
-    "grunt-tsconfig": "^0.2.2",
-    "grunt-tslint": "^4.0.0",
-    "tslint": "^4.2.0",
-    "typescript": "^2.1.4"
+    "tslint": "^4.2.0"
+  },
+  "dependencies": {
+    "typescript": "^2.1.4",
+    "@types/arcgis-js-api": "^4.2.0"
   }
 }
